@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-02-06 12:09:09 / 修改时间：12:10:23" itemprop="dateCreated datePublished" datetime="2021-02-06T12:09:09+08:00">2021-02-06</time>
+              <time title="创建时间：2021-02-06 12:09:09 / 修改时间：12:21:31" itemprop="dateCreated datePublished" datetime="2021-02-06T12:09:09+08:00">2021-02-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,7 +209,7 @@
 
       
           <h2 id="mac-hexo-github搭建个人博客"><a href="#mac-hexo-github搭建个人博客" class="headerlink" title="mac+hexo+github搭建个人博客"></a>mac+hexo+github搭建个人博客</h2><h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p>从官网下载对应版本进行下载：<a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-<h3 id="安装git并进行相应配置"><a href="#安装git并进行相应配置" class="headerlink" title="安装git并进行相应配置"></a>安装git并进行相应配置</h3><p>网上有很多大家写的教程，大家可以自行搜索进行一下配置。<br>在这里也贴上一个csdn上的配置教程：<a target="_blank" rel="noopener" href="https://blog.csdn.net/crystalqy/article/details/80493414?utm_term=mac%E7%BB%88%E7%AB%AF%E5%AE%89%E8%A3%85git%E5%B9%B6%E9%85%8D%E7%BD%AE&amp;utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-1-80493414&amp;spm=3001.4430">https://blog.csdn.net/crystalqy/article/details/80493414?utm_term=mac终端安装git并配置&amp;utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-1-80493414&amp;spm=3001.4430</a></p>
+<h3 id="安装git并进行相应配置"><a href="#安装git并进行相应配置" class="headerlink" title="安装git并进行相应配置"></a>安装git并进行相应配置</h3><p>网上有很多大家写的教程，大家可以自行搜索进行一下配置。<br>在这里也贴上一个csdn上的配置教程：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/xiaohanluo/article/details/53214933">http://blog.csdn.net/xiaohanluo/article/details/53214933</a></p>
 <h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>在终端执行如下命令进行hexo的安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <p>如果出现错误：rollbackFailedOptional: verb npm-session 6ba5c1dbd2f5df8a，可以通过以下方式解决</p>
@@ -253,7 +253,7 @@
 <p>执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
 <p>你就会发现themes文件夹下多了next文件夹，也就是说next主题下载好了</p>
-<h5 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h5><p>打开MyBlog文件夹下的站点配置文件_config.yml，把主题改成next</p>
+<h4 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h4><p>打开MyBlog文件夹下的站点配置文件_config.yml，把主题改成next</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
 <p>next有4种不同的风格，可以通过next文件夹下的主题配置文件_config.yml找到Schemes，选择你喜欢的进行设置</p>
 <blockquote>
@@ -268,16 +268,19 @@
 <blockquote>
 <p>在这里推荐一个mac上非常好用的markdown编辑器软件：Typora（<a target="_blank" rel="noopener" href="https://www.typora.io)非常的简洁好看易上手/">https://www.typora.io）非常的简洁好看易上手</a></p>
 </blockquote>
-<h5 id="图床选择"><a href="#图床选择" class="headerlink" title="图床选择"></a>图床选择</h5><p>如果我们都把图片存放在source文件夹加载起来会非常慢，而把博文里的图片上传到某一网站，然后获得外部链接，使用Markdown语法完成图片的插入的方式加载起来会很快，这种网站也成为图床。<br>例如：</p>
+<h4 id="图床选择"><a href="#图床选择" class="headerlink" title="图床选择"></a>图床选择</h4><p>如果我们都把图片存放在source文件夹加载起来会非常慢，而把博文里的图片上传到某一网站，然后获得外部链接，使用Markdown语法完成图片的插入的方式加载起来会很快，这种网站也成为图床。<br>例如：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://qo26v676s.hn-bkt.clouddn.com/123.jpg-pic1&quot;</span> <span class="attr">width</span> = <span class="string">100%</span> <span class="attr">div</span> <span class="attr">align</span>=<span class="string">center/</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>在这里我选择了七牛云（<a target="_blank" rel="noopener" href="https://www.qiniu.com)/">https://www.qiniu.com）</a> </p>
 <p>首先创建一个账号, 登录后在对象存储中新建空间，在建好的空间中选择文件管理就可以上传图片了。从更多中复制外链，就可以直接使用了。</p>
 <img src="http://qo26v676s.hn-bkt.clouddn.com/123.jpg-pic1" width = 100% div align=center/>
-> 注意：图片上传后直接引用外链可能会存在模糊的情况，需要进行图片样式设置再引用
-> 官方教程如下：https://developer.qiniu.com/kodo/kb/1395/video-tutorials-pictures-style?category=kb
 
+
+<blockquote>
+<p>注意：图片上传后直接引用外链可能会存在模糊的情况，需要进行图片样式设置再引用<br>官方教程如下：<a target="_blank" rel="noopener" href="https://developer.qiniu.com/kodo/kb/1395/video-tutorials-pictures-style?category=kb">https://developer.qiniu.com/kodo/kb/1395/video-tutorials-pictures-style?category=kb</a></p>
+</blockquote>
 <p>写完博客后，再通过命令上传到服务器，就能看到博文啦。</p>
-<p>**next还有更多个性化的设置，比如头像，标签等等等，都可以从官网中进行学习并设置<a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/getting-started.html">http://theme-next.iissnan.com/getting-started.html</a> **</p>
+<p><strong>next还有更多个性化的设置，比如头像，标签等等等，都可以从官网中进行学习并设置</strong></p>
+<p><a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/getting-started.html">http://theme-next.iissnan.com/getting-started.html</a></p>
 <p>参考文献：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75438236">https://zhuanlan.zhihu.com/p/75438236</a></p>
 
       
