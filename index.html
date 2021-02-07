@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-02-07 22:39:07 / 修改时间：22:41:00" itemprop="dateCreated datePublished" datetime="2021-02-07T22:39:07+08:00">2021-02-07</time>
+              <time title="创建时间：2021-02-07 22:39:07 / 修改时间：22:47:46" itemprop="dateCreated datePublished" datetime="2021-02-07T22:39:07+08:00">2021-02-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,12 +218,14 @@
 <li><code>1 &lt;= n &lt;= 10 ^ 4</code></li>
 <li><code>- 10 ^ 5 &lt;= nums[i] &lt;= 10 ^ 5</code></li>
 </ul>
-<p><strong>题解：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkPossibility</span>(<span class="params">self, nums: List[<span class="built_in">int</span>]</span>) -&gt; bool:</span></span><br><span class="line">        <span class="comment"># 分情况讨论，根据题意当发生非递减时，需要进行修改，修改一共有两种方式，大的改小或者小的改大，如果两种修改方式都不行，那么不可能变成非递减数列</span></span><br><span class="line">        <span class="comment"># 另一种是如果有1次以上需要修改，则不能只修改一次变成非递减数列</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        maxnum = nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[i]&lt;nums[i-<span class="number">1</span>]:</span><br><span class="line">                res+=<span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> res&gt;=<span class="number">2</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">                <span class="keyword">if</span> i&gt;=<span class="number">2</span> <span class="keyword">and</span> i+<span class="number">1</span>&lt;<span class="built_in">len</span>(nums):</span><br><span class="line">                    <span class="keyword">if</span> nums[i-<span class="number">2</span>]&gt;nums[i] <span class="keyword">and</span> nums[i-<span class="number">1</span>]&gt;nums[i+<span class="number">1</span>]:</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/non-decreasing-array">https://leetcode-cn.com/problems/non-decreasing-array</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/07/leetcode665/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -265,10 +267,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-02-06 12:09:09 / 修改时间：12:21:31" itemprop="dateCreated datePublished" datetime="2021-02-06T12:09:09+08:00">2021-02-06</time>
+              <time title="创建时间：2021-02-06 12:09:09" itemprop="dateCreated datePublished" datetime="2021-02-06T12:09:09+08:00">2021-02-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-07 22:48:20" itemprop="dateModified" datetime="2021-02-07T22:48:20+08:00">2021-02-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -298,73 +306,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去掉npm代理：</span></span><br><span class="line">sudo npm config rm proxy</span><br><span class="line">sudo npm config rm https-proxy</span><br><span class="line"><span class="comment"># 修改npm的资源镜像链接:</span></span><br><span class="line">npm config <span class="built_in">set</span> registry http://registry.npm.taobao.org</span><br><span class="line"><span class="comment"># 查看是否修改成功:</span></span><br><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
 <p>再执行 <code>npm install -g hexo-cli</code> 就可以了</p>
 <p>解决方法来自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mmm654/article/details/106184630/">https://blog.csdn.net/mmm654/article/details/106184630/</a></p>
-<h3 id="博客初始化"><a href="#博客初始化" class="headerlink" title="博客初始化"></a>博客初始化</h3><p>创建一个文件夹 MyBlog 用于存储博客文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> MyBlog</span><br></pre></td></tr></table></figure>
-<p>初始化本地博客，输入以下命令。初始化时，文件夹要为空，否则会初始化失败。失败了可以删除文件夹再重新创建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo hexo init</span><br></pre></td></tr></table></figure>
-<p>测试(生成本地网页文件并开启服务器)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo hexo g</span><br><span class="line">sudo hexo s</span><br></pre></td></tr></table></figure>
-<p>通过<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 可以查看本地博客</p>
-<h3 id="发布网站到github"><a href="#发布网站到github" class="headerlink" title="发布网站到github"></a>发布网站到github</h3><p>注册并登陆GitHub账号后，新建仓库，名称必须为 user.github.io, user就是你github账号的名字</p>
-<blockquote>
-<p>在 Hexo 中有两份主要的配置文件，其名称都是 <code>_config.yml</code>。 其中，一份位于站点根目录下，主要包含 Hexo 本身的配置；另一份位于主题目录下，这份配置由主题作者提供，主要用于配置主题相关的选项。</p>
-</blockquote>
-<p>关于站点配置文件和主题配置文件可以在主题Next的官网看到细节：<a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/getting-started.html">http://theme-next.iissnan.com/getting-started.html</a></p>
-<p>打开MyBlog下站点配置文件 _config.yml, 翻到最后修改并保存。</p>
-<p>如果存在权限问题可以采用命令行的方式修改，也可以直接复制一个_config.yml文件的副本进行修改，再将原来的 _config.yml文件删除，将副本改名为 _config.yml。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repository: https://github.com/bellalee01/bellalee01.github.io.git[填入之前在GitHub上创建仓库的完整路径]</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<p>安装Git部署插件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p>测试(生成静态文件并上传到服务器)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo hexo clean </span><br><span class="line">sudo hexo g </span><br><span class="line">sudo hexo d</span><br></pre></td></tr></table></figure>
-<p>点击 bellalee01.github.io[user.github.io]就可以访问个人博客啦</p>
-<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><p>如果想要用自己喜欢的域名访问个人博客，就需要将自己的域名绑定到自己的网站上。</p>
-<p>域名注册的方式有很多，可以通过阿里云/百度云/腾讯云购买你喜欢的个性域名。</p>
-<p>购买域名后，为域名添加解析功能（因为用的是github的服务器所以不需要备案，如果使用的是国内的服务器需要先通过域名代理厂商进行备案）。</p>
-<p>ping github域名得到一个ip</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ping bellalee01.github.io</span><br></pre></td></tr></table></figure>
-<p>添加两条域名解析记录，记录值就是ping得到的结果<br><img src="http://qo26v676s.hn-bkt.clouddn.com/%E6%88%AA%E5%B1%8F2021-02-06%20%E4%B8%8A%E5%8D%8811.13.43.png-pic1" width = 100% div align=center/><br>进入本地博客文件夹</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> MyBlog</span><br></pre></td></tr></table></figure>
-<p>进入 MyBlog/source目录<br>创建无后缀的CNAME文件，将域名粘贴进文件中<br><img src="http://qo26v676s.hn-bkt.clouddn.com/%E6%88%AA%E5%B1%8F2021-02-06%20%E4%B8%8A%E5%8D%8811.47.38.png-pic1" width = 50% div align=left/><br>注意保存成<strong>所有文件</strong>而不是<strong>txt文件</strong><br>测试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo hexo clean</span><br><span class="line">sudo hexo g</span><br><span class="line">sudo hexo d</span><br></pre></td></tr></table></figure>
-<p>这时候打开浏览器在地址栏输入你的个性化域名将会直接进入你自己搭建的网站。<br>比如我的网页是<a target="_blank" rel="noopener" href="https://lixuefei96.com/">https://lixuefei96.com</a></p>
-<h3 id="主题设置"><a href="#主题设置" class="headerlink" title="主题设置"></a>主题设置</h3><p>github上有很多好看的hexo模板，可以按照你的喜好进行选择：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/39388850">https://www.zhihu.com/question/39388850</a></p>
-<p>这里我选择了简洁的Next</p>
-<p>同样还是在MyBlog文件夹下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> MyBlog</span><br></pre></td></tr></table></figure>
-<p>执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>你就会发现themes文件夹下多了next文件夹，也就是说next主题下载好了</p>
-<h4 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h4><p>打开MyBlog文件夹下的站点配置文件_config.yml，把主题改成next</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
-<p>next有4种不同的风格，可以通过next文件夹下的主题配置文件_config.yml找到Schemes，选择你喜欢的进行设置</p>
-<blockquote>
-<p>关于next的设置内容，next官网里有非常详细的讲解<a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/getting-started.html">http://theme-next.iissnan.com/getting-started.html</a> 可以根据需要进行配置</p>
-</blockquote>
-<p>然后执行如下命令就可以将更改上传到服务器（每次更新过后都要执行这个操作进行上传）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo hexo clean</span><br><span class="line">sudo hexo g</span><br><span class="line">sudo hexo d</span><br></pre></td></tr></table></figure>
-<p>访问你自己的个性域名/github仓库路径都可以看到最新的页面</p>
-<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>首先创建一个md文件，命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo hexo new my_first_blog[文件名]</span><br></pre></td></tr></table></figure>
-<p>然后在博客文件夹目录下的MyBlog/source/_posts中打开</p>
-<blockquote>
-<p>在这里推荐一个mac上非常好用的markdown编辑器软件：Typora（<a target="_blank" rel="noopener" href="https://www.typora.io)非常的简洁好看易上手/">https://www.typora.io）非常的简洁好看易上手</a></p>
-</blockquote>
-<h4 id="图床选择"><a href="#图床选择" class="headerlink" title="图床选择"></a>图床选择</h4><p>如果我们都把图片存放在source文件夹加载起来会非常慢，而把博文里的图片上传到某一网站，然后获得外部链接，使用Markdown语法完成图片的插入的方式加载起来会很快，这种网站也成为图床。<br>例如：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://qo26v676s.hn-bkt.clouddn.com/123.jpg-pic1&quot;</span> <span class="attr">width</span> = <span class="string">100%</span> <span class="attr">div</span> <span class="attr">align</span>=<span class="string">center/</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>在这里我选择了七牛云（<a target="_blank" rel="noopener" href="https://www.qiniu.com)/">https://www.qiniu.com）</a> </p>
-<p>首先创建一个账号, 登录后在对象存储中新建空间，在建好的空间中选择文件管理就可以上传图片了。从更多中复制外链，就可以直接使用了。</p>
-<img src="http://qo26v676s.hn-bkt.clouddn.com/123.jpg-pic1" width = 100% div align=center/>
-
-
-<blockquote>
-<p>注意：图片上传后直接引用外链可能会存在模糊的情况，需要进行图片样式设置再引用<br>官方教程如下：<a target="_blank" rel="noopener" href="https://developer.qiniu.com/kodo/kb/1395/video-tutorials-pictures-style?category=kb">https://developer.qiniu.com/kodo/kb/1395/video-tutorials-pictures-style?category=kb</a></p>
-</blockquote>
-<p>写完博客后，再通过命令上传到服务器，就能看到博文啦。</p>
-<p><strong>next还有更多个性化的设置，比如头像，标签等等等，都可以从官网中进行学习并设置</strong></p>
-<p><a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/getting-started.html">http://theme-next.iissnan.com/getting-started.html</a></p>
-<p>参考文献：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75438236">https://zhuanlan.zhihu.com/p/75438236</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/06/create-a-blog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
