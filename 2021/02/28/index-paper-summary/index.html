@@ -28,7 +28,7 @@
 <meta property="og:description" content="索引相关知识 现有的索引方法主要分为三种:哈希索引，B 树或者 B+树索引，bitmap 索引。 哈希索引 此方法在开始阶段，每个记录的插入只消耗较小的 CPU 时间。但是随着记录数目的增加，由于哈希冲突链长度的不断增加，之后的插入操作将会花费大量的时间去查找哈希表中的对应存储位置。 只支持单域的相等性查找，不支持区间范围查找 为组合字段建立索引的时候，针对部分索引字段的查询是不能支持的   B">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-28T12:51:53.000Z">
-<meta property="article:modified_time" content="2021-02-28T14:31:49.535Z">
+<meta property="article:modified_time" content="2021-02-28T14:49:06.229Z">
 <meta property="article:author" content="lxf">
 <meta property="article:tag" content="论文阅读">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-02-28 20:51:53 / 修改时间：22:31:49" itemprop="dateCreated datePublished" datetime="2021-02-28T20:51:53+08:00">2021-02-28</time>
+              <time title="创建时间：2021-02-28 20:51:53 / 修改时间：22:49:06" itemprop="dateCreated datePublished" datetime="2021-02-28T20:51:53+08:00">2021-02-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -443,8 +443,7 @@
 </ol>
 <p>​        索引性能对于内存OLTP系统来说非常重要。本文提出用简单的机器学习模型来加速B+树搜索。我们针对每个索引节点训练一个线性回归模型，并使用这些模型在连续的层级上预测索引节点。在预测出叶节点后，我们只需跳到预测出的叶节点，并进行局部搜索以找到记录。提出了一种将学习模型集成到B+树搜索操作中的算法，并在存在插入的情况下自适应地训练学习模型。<br>​        实验结果表明，该方法对叶片节点的预测准确率为80%～96%，搜索时间缩短了33%～57%。此外，该方法对插入具有鲁棒性，能够快速更新机器学习模型，以适应新插入的key和node。</p>
 <ul>
-<li><p>Kraska 假设的是只读工作负载和聚集索引组织，其中数据存储在连续的内存位置。</p>
-<ul>
+<li>Kraska 假设的是只读工作负载和聚集索引组织，其中数据存储在连续的内存位置。<ul>
 <li>本文支持插入，并将数据作为数据页存储在非连续的内存位置<ul>
 <li>带来的挑战：<ul>
 <li>插入学习模型：需要一个再培训阶段来更新学习的模型</li>
@@ -456,10 +455,8 @@
 </li>
 </ul>
 </li>
-<li><p>本文只加速了搜索查询阶段</p>
-</li>
-<li><p>使用两个辅助数据结构将线性回归模型集成到B+树搜索算法中:</p>
-<ul>
+<li>本文只加速了搜索查询阶段</li>
+<li>使用两个辅助数据结构将线性回归模型集成到B+树搜索算法中:<ul>
 <li>model table <ul>
 <li>节点号映射到指向特定节点所在内存位置的指针上</li>
 </ul>
@@ -476,10 +473,8 @@
 </li>
 </ul>
 </li>
-<li><p>对每个树节点的再训练包括三个主要任务：</p>
-<ul>
-<li><p>更新用作标签的节点编号</p>
-<ul>
+<li>对每个树节点的再训练包括三个主要任务：<ul>
+<li>更新用作标签的节点编号<ul>
 <li>节点编号方式：<ul>
 <li>在每一级，对节点进行连续编号，从1到N，其中N是该级的最后一个节点</li>
 <li>对于均匀分布，直接使用节点号作为标签</li>
@@ -488,25 +483,17 @@
 </li>
 </ul>
 </li>
-<li><p>收集训练数据并训练新的回归模型</p>
-</li>
-<li><p>更新映射和模型表项</p>
-</li>
-<li><p>retrain过程</p>
-<ul>
-<li><p>广度优先搜索遍历树</p>
-<ul>
-<li><p>在每个节点的访问中，节点号会被更新</p>
-</li>
-<li><p>在每个叶级节点统一随机收集一次trainning key</p>
-</li>
-<li><p>对trainning key执行搜索查询并保存搜索遍历的节点的键和节点号生成训练数据</p>
-<ul>
+<li>收集训练数据并训练新的回归模型</li>
+<li>更新映射和模型表项</li>
+<li>retrain过程<ul>
+<li>广度优先搜索遍历树<ul>
+<li>在每个节点的访问中，节点号会被更新</li>
+<li>在每个叶级节点统一随机收集一次trainning key</li>
+<li>对trainning key执行搜索查询并保存搜索遍历的节点的键和节点号生成训练数据<ul>
 <li>这里的搜索查询采用的是对B+树的遍历？</li>
 </ul>
 </li>
-<li><p>再训练过程使用生成的训练数据为每个节点创建一个新的线性回归模型</p>
-</li>
+<li>再训练过程使用生成的训练数据为每个节点创建一个新的线性回归模型</li>
 </ul>
 </li>
 </ul>
