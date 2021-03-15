@@ -183,10 +183,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-03-12 15:26:04 / 修改时间：15:35:07" itemprop="dateCreated datePublished" datetime="2021-03-12T15:26:04+08:00">2021-03-12</time>
+              <time title="创建时间：2021-03-12 15:26:04" itemprop="dateCreated datePublished" datetime="2021-03-12T15:26:04+08:00">2021-03-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:50:26" itemprop="dateModified" datetime="2021-03-15T10:50:26+08:00">2021-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -212,94 +218,14 @@
 <blockquote>
 <p>维基百科关于FSM、DFA、NFA的介绍<br>有限状态机（Finite State Machine：FSM）又称有限状态自动机或简称状态机，是表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。<br>在计算理论中，确定有限状态自动机或确定有限自动机（英：deterministic finite automaton；简称：DFA）是一个能实现状态转移的自动机。对于一个给定的属于该自动机的状态和一个属于该自动机字母表Σ的字符，它都能根据事先给定的转移函数转移到下一个状态（这个状态有可能就是先前那个状态）。<br>在计算理论中，非确定有限状态自动机或非确定有限自动机(NFA)是对每个状态和输入符号对可以有多个可能的下一个状态的有限状态自动机。这区别于确定有限状态自动机(DFA)，它的下一个可能状态是唯一确定的。尽管 DFA 和 NFA 有不同的定义，在形式理论中可以证明它们是等价的；就是说，对于任何给定 NFA，都可以构造一个等价的 DFA，反之亦然: 通过使用幂集构造。两种类型的自动机只识别正则语言。非确定有限自动机有时被称为有限类型的子移位(subshift)。非确定有限状态自动机可推广为概率自动机，它为每个状态转移指派概率。 </p>
 </blockquote>
-<h3 id="基于推测的方法"><a href="#基于推测的方法" class="headerlink" title="基于推测的方法"></a>基于推测的方法</h3><p>SPPM 2011</p>
-<h3 id="基于枚举的方法"><a href="#基于枚举的方法" class="headerlink" title="基于枚举的方法"></a>基于枚举的方法</h3><h5 id="Efficient-Parallelization-of-Regular-Expression-Matching-for-Deep-Inspection-2016"><a href="#Efficient-Parallelization-of-Regular-Expression-Matching-for-Deep-Inspection-2016" class="headerlink" title="Efficient Parallelization of Regular Expression Matching for Deep Inspection (2016)"></a>Efficient Parallelization of Regular Expression Matching for Deep Inspection (2016)</h5><h6 id="算法依据"><a href="#算法依据" class="headerlink" title="算法依据"></a>算法依据</h6><ol>
-<li>随着字符串向后匹配，激活状态会越来越少(状态汇聚)</li>
-<li>相同的激活状态可以合并</li>
-</ol>
-<img src="http://img.lixuefei96.com/pic1-1.png-pic1" alt="pic1-1" style="zoom:30%;" />
-
-<img src="http://img.lixuefei96.com/pic1-2.png-pic1" alt="pic1-1" style="zoom:30%;" />
-
-<h6 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h6><ol>
-<li><p>与MapReduce模型类似，程序可以分为3个步骤：映射、匹配和还原</p>
-<ul>
-<li>从所有起始状态的集合开始，每个线程根据每个数据块的输入独立计算出子结果，然后将所有线程的子结果依次加入进行还原，得到最终的匹配结果</li>
-</ul>
-</li>
-<li><p>设计<strong>“中间状态单元“（MSU）</strong>的数据结构，以比特形式记录各数据块的匹配历史信息</p>
-</li>
-</ol>
-<img src="http://img.lixuefei96.com/pic1-3.png" alt="pic1-3" style="zoom:30%;" />
-
-<h6 id="算法细节"><a href="#算法细节" class="headerlink" title="算法细节"></a>算法细节</h6><img src="http://img.lixuefei96.com/pic1-5.png" alt="pic1-3" style="zoom:39%;" />
-
-
-
-<p>Mapping(1-7): n是线程数</p>
-<ul>
-<li>对每个线程的MSU进行初始化<ul>
-<li>第一个线程的MSU只有一个就是DFA中state0 对应的MSU</li>
-<li>剩下线程的开始状态是根据全部DFA状态构建的MSU</li>
-</ul>
-</li>
-</ul>
-<p>Matching(8-12): </p>
-<ul>
-<li>每个线程的字符逐个匹配<ul>
-<li>对于第一个线程正常进行状态转移</li>
-<li>对于剩下的线程来说<ul>
-<li>枚举MSU，进行状态转移，MSU.id变为转移后的值</li>
-<li>合并转移后id相同的MSU：MSU.mapping变为id相同MSU的mapping的并集(如下图)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="http://img.lixuefei96.com/pic1-4.png-pic1" alt="pic1-3" style="zoom:39%;" />
-
-<img src="http://img.lixuefei96.com/pic1-6.png-pic1" alt="pic1-3" style="zoom:39%;" />
-
-<p>Reduceing(16-25): 如下图</p>
-<ul>
-<li>对每个线程的结果进行合并：<ul>
-<li>第一个线程的最终状态就是线程1最终的MSU，将其设置为MSU_final</li>
-<li>对剩下线程来说，枚举MSU，如果MSU.mapping &amp;&amp; MSU_final.id 不为0，则说明上一个线程的最终状态最终将转移到该MSU</li>
-<li>更新MSU_final.id为新的id</li>
-</ul>
-</li>
-<li>循环到最后的时候就是最终到达的状态</li>
-</ul>
-<img src="http://img.lixuefei96.com/pic1-7.png-pic1" alt="pic1-3" style="zoom:39%;" />
-
-
-<h5 id="Combining-SIMD-and-Many-Multi-core-Parallelism-for-Finite-State-Machines-with-Enumerative-Speculation-2017-基于规则-枚举"><a href="#Combining-SIMD-and-Many-Multi-core-Parallelism-for-Finite-State-Machines-with-Enumerative-Speculation-2017-基于规则-枚举" class="headerlink" title="Combining SIMD and Many/Multi-core Parallelism for Finite State Machines with Enumerative Speculation(2017) 基于规则+枚举"></a>Combining SIMD and Many/Multi-core Parallelism for Finite State Machines with Enumerative Speculation(2017) 基于规则+枚举</h5><h6 id="摘要及贡献"><a href="#摘要及贡献" class="headerlink" title="摘要及贡献"></a>摘要及贡献</h6><p>提出了枚举式推测算法，该方法不是像投机执行中那样对单一状态进行投机，也不是像枚举执行中那样对所有可能的状态进行枚举，而是对几种可能状态的转换进行投机，减少了投机方法的预测开销和枚举方法中大量的冗余工作。在枚举式猜测中，一个简单的回溯方法产生一组猜测状态，以实现高猜测成功率。<br>1）FSM的冗余工作和并行性（推测成功率）之间有一个权衡；<br>2）在多个推测状态下，推测成功率对块大小不敏感。</p>
-<h6 id="算法依据-1"><a href="#算法依据-1" class="headerlink" title="算法依据"></a>算法依据</h6><ol>
-<li>在猜测性并行化中，一个未知变量通常只分配一个猜测值来执行。如果程序为一个未知变量尝试多个猜测值，与只尝试一个猜测值相比，它更有可能获得正确的猜测。</li>
-<li>枚举式推测使用多个值作为输入块的起始状态，并以这些猜测值分别执行。相比枚举减少了冗余，相比推测减少了回滚。</li>
-<li>论文提出了一种一个预测起始状态的简单方法，在FSM应用中，在猜测状态不超过16个的情况下，可以达到很高的猜测成功率。</li>
-</ol>
-<img src="http://img.lixuefei96.com/pic1-8.png-pic1" align='middle' alt="pic1-3" style="zoom:39%;"  />
-<img src="http://img.lixuefei96.com/pic1-9.png-pic1" alt="pic1-3" style="zoom:39%;" />
-
-<h6 id="算法细节-1"><a href="#算法细节-1" class="headerlink" title="算法细节"></a>算法细节</h6><ol>
-<li>利用SIMD存储状态转移表</li>
-<li>多块并行执行<ul>
-<li>第一块正常执行</li>
-<li>后面的块利用前面的预测方法选择多个起始状态执行</li>
-<li>通过前一块的最后状态和后一块的第一个状态对比找到正确的状态</li>
-</ul>
-</li>
-<li>有几块并行执行取决于SIMD(2块并行执行然后回滚/3块并行执行然后回滚……)</li>
-</ol>
-<img src="http://img.lixuefei96.com/pic1-10.png-pic1" alt="pic1-3" style="zoom:30%;" />
-<img src="http://img.lixuefei96.com/pic1-11.png-pic1" alt="pic1-3" style="zoom:39%;" />
-
-<h6 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h6><ol>
-<li>使用lookback-2预测的程序在块大小为8的情况下性能较差，而最好的性能总是在块大小为1024到8192之间。</li>
-<li>这是因为检查8个字符中的2个字符来预测起始状态的开销超过了更好的缓存性能的好处。</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/12/match-algorithm/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
