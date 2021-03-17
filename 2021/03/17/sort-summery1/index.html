@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/xxw/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="排序算法整理(一)本篇文章整理了归并排序和快速排序的相关原理和python实现代码 归并排序​        归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治（divide-and-conquer）策略（分治法将问题分(divide)成一些小的问题然后递归求解，而治(conquer)的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sort_summery1">
+<meta property="og:url" content="http://example.com/2021/03/17/sort-summery1/index.html">
+<meta property="og:site_name" content="lxf&#39;s blog">
+<meta property="og:description" content="排序算法整理(一)本篇文章整理了归并排序和快速排序的相关原理和python实现代码 归并排序​        归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治（divide-and-conquer）策略（分治法将问题分(divide)成一些小的问题然后递归求解，而治(conquer)的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.png-pic1">
+<meta property="og:image" content="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-3.png-pic1">
+<meta property="og:image" content="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-2.png-pic1">
+<meta property="og:image" content="http://img.lixuefei96.com/quicksort1.png-pic1">
+<meta property="og:image" content="http://img.lixuefei96.com/quicksort2.png-pic1">
+<meta property="article:published_time" content="2021-03-17T13:44:49.000Z">
+<meta property="article:modified_time" content="2021-03-17T13:46:35.981Z">
+<meta property="article:author" content="lxf">
+<meta property="article:tag" content="归并排序">
+<meta property="article:tag" content="快速排序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.png-pic1">
+
+<link rel="canonical" href="http://example.com/2021/03/17/sort-summery1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>sort_summery1 | lxf's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lxf's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/17/sort-summery1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="lxf">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lxf's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sort_summery1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-17 21:44:49 / 修改时间：21:46:35" itemprop="dateCreated datePublished" datetime="2021-03-17T21:44:49+08:00">2021-03-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">排序算法</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="排序算法整理-一"><a href="#排序算法整理-一" class="headerlink" title="排序算法整理(一)"></a>排序算法整理(一)</h2><p><strong>本篇文章整理了归并排序和快速排序的相关原理和python实现代码</strong></p>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>​        归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治（divide-and-conquer）策略（分治法将问题分(divide)成一些小的问题然后递归求解，而治(conquer)的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。</p>
+<a id="more"></a>
+
+<img src="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.png-pic1" alt="归并排序" style="zoom:30%;" />
+
+<p>最后合并详细过程如下：</p>
+<img src="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-3.png-pic1" alt="归并排序" style="zoom:30%;" />
+
+<img src="http://img.lixuefei96.com/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-2.png-pic1" alt="归并排序" style="zoom:30%;" />
+
+<p>基于python实现的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge</span>(<span class="params">arr, l, m, r</span>):</span> </span><br><span class="line">    n1 = m - l + <span class="number">1</span></span><br><span class="line">    n2 = r- m </span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 创建临时数组</span></span><br><span class="line">    L = <span class="built_in">list</span>(arr[l:m+<span class="number">1</span>])</span><br><span class="line">    R = <span class="built_in">list</span>(arr[m+<span class="number">1</span>:r+<span class="number">1</span>])</span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 归并临时数组到 arr[l..r]</span></span><br><span class="line">    <span class="comment"># 这里相当于合并2个排序的数组</span></span><br><span class="line">    i,j,k = <span class="number">0</span>,<span class="number">0</span>,l       </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">while</span> i &lt; n1 <span class="keyword">and</span> j &lt; n2 : </span><br><span class="line">        <span class="keyword">if</span> L[i] &lt;= R[j]: </span><br><span class="line">            arr[k] = L[i] </span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>: </span><br><span class="line">            arr[k] = R[j] </span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 拷贝 L[] 的保留元素</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; n1: </span><br><span class="line">        arr[k] = L[i] </span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 拷贝 R[] 的保留元素</span></span><br><span class="line">    <span class="keyword">while</span> j &lt; n2: </span><br><span class="line">        arr[k] = R[j] </span><br><span class="line">        j += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mergeSort</span>(<span class="params">arr,l,r</span>):</span> </span><br><span class="line">    <span class="keyword">if</span> l &lt; r: </span><br><span class="line">        m = <span class="built_in">int</span>((l+(r-<span class="number">1</span>))/<span class="number">2</span>)</span><br><span class="line">        mergeSort(arr, l, m) </span><br><span class="line">        mergeSort(arr, m+<span class="number">1</span>, r) </span><br><span class="line">        merge(arr, l, m, r) </span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">      arr = [<span class="number">12</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>] </span><br><span class="line">      n = <span class="built_in">len</span>(arr) </span><br><span class="line">      print(<span class="string">&quot;给定的数组&quot;</span>) </span><br><span class="line">      print(arr)</span><br><span class="line">      mergeSort(arr,<span class="number">0</span>,n-<span class="number">1</span>) </span><br><span class="line">      print(<span class="string">&quot;排序后的数组&quot;</span>) </span><br><span class="line">      print(arr)</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><blockquote>
+<p>快速排序使用分治法（Divide and conquer）策略来把一个序列（list）分为较小和较大的2个子序列，然后递归地排序两个子序列。</p>
+</blockquote>
+<p>该方法的基本思想是：<br>1．先从数列中取出一个数作为基准数。<br>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边。<br>3．再对左右区间重复第二步，直到各区间只有一个数。</p>
+<p><font color=#A52A2A face="微软雅黑">下面图有画错的地方，应该用i,j=left,right，执行左右指针的操作，递归的是[left,i],[j,right]两部分</font></p>
+<h5 id="填坑法"><a href="#填坑法" class="headerlink" title="填坑法"></a>填坑法</h5><img src="http://img.lixuefei96.com/quicksort1.png-pic1" alt="归并排序" style="zoom:30%;" />
+
+<h5 id="交换法"><a href="#交换法" class="headerlink" title="交换法"></a>交换法</h5><img src="http://img.lixuefei96.com/quicksort2.png-pic1" alt="归并排序" style="zoom:30%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition_tiankeng</span>(<span class="params">arr,left,right</span>):</span></span><br><span class="line">    x = arr[left]</span><br><span class="line">    i,j = left,right</span><br><span class="line">    <span class="keyword">while</span> i&lt;j:</span><br><span class="line">        <span class="keyword">while</span> i&lt;j <span class="keyword">and</span> arr[j]&gt;=x:</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> i&lt;j :</span><br><span class="line">            arr[i] = arr[j]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i&lt;j <span class="keyword">and</span> arr[i]&lt;x:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> i&lt;j:</span><br><span class="line">            arr[j] = arr[i]</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">    arr[i] = x</span><br><span class="line">    <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition_exchange</span>(<span class="params">arr,left,right</span>):</span></span><br><span class="line">    x = arr[left]</span><br><span class="line">    i,j = left,right</span><br><span class="line">    <span class="keyword">while</span> i&lt;j:</span><br><span class="line">        <span class="keyword">while</span> i&lt;j <span class="keyword">and</span> arr[j]&gt;x:</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i&lt;j <span class="keyword">and</span> arr[i]&lt;=x:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> i&lt;j :</span><br><span class="line">            arr[i],arr[j] = arr[j],arr[i]</span><br><span class="line">    arr[i],arr[left] = arr[left],arr[i]</span><br><span class="line">    <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span>(<span class="params">arr,left,right</span>):</span></span><br><span class="line">    <span class="keyword">if</span> left&lt;right:</span><br><span class="line">        pos = partition_exchange(arr,left,right)</span><br><span class="line">        quicksort(arr,left,pos-<span class="number">1</span>)</span><br><span class="line">        quicksort(arr,pos+<span class="number">1</span>,right)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">      arr = [<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>]</span><br><span class="line">      n = <span class="built_in">len</span>(arr) </span><br><span class="line">      quicksort(arr,<span class="number">0</span>,n-<span class="number">1</span>) </span><br><span class="line">      print(arr)</span><br></pre></td></tr></table></figure>
+<p>参考文献：<br>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/morewindows/article/details/6684558">https://blog.csdn.net/morewindows/article/details/6684558</a><br>[2] <a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python-quicksort.html">https://www.runoob.com/python3/python-quicksort.html</a><br>[3] <a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python-merge-sort.html">https://www.runoob.com/python3/python-merge-sort.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" rel="tag"># 归并排序</a>
+              <a href="/tags/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" rel="tag"># 快速排序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/12/match-algorithm/" rel="prev" title="正则表达式匹配算法（提升匹配速度类）总结">
+      <i class="fa fa-chevron-left"></i> 正则表达式匹配算法（提升匹配速度类）总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%95%B4%E7%90%86-%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">排序算法整理(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A1%AB%E5%9D%91%E6%B3%95"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">填坑法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%B3%95"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">交换法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lxf"
+      src="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
+  <p class="site-author-name" itemprop="name">lxf</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lixuefei@ict.ac.cn" title="E-Mail → mailto:lixuefei@ict.ac.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxf</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/xxw/anime.min.js"></script>
+  <script src="/xxw/velocity/velocity.min.js"></script>
+  <script src="/xxw/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
