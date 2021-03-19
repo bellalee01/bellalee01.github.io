@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-19 22:55:16" itemprop="dateModified" datetime="2021-03-19T22:55:16+08:00">2021-03-19</time>
+                <time title="修改时间：2021-03-19 23:08:47" itemprop="dateModified" datetime="2021-03-19T23:08:47+08:00">2021-03-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,8 +214,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="排序算法整理-一"><a href="#排序算法整理-一" class="headerlink" title="排序算法整理(一)"></a>排序算法整理(一)</h2><p><strong>本篇文章整理了归并排序和快速排序的相关原理和python实现代码</strong></p>
-<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>​        归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治（divide-and-conquer）策略（分治法将问题分(divide)成一些小的问题然后递归求解，而治(conquer)的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。</p>
+          <p><strong>本篇文章整理了归并排序和快速排序的相关原理和python实现代码</strong></p>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><blockquote>
+<p>归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治（divide-and-conquer）策略（分治法将问题分(divide)成一些小的问题然后递归求解，而治(conquer)的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。</p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/03/17/sort-summery1/#more" rel="contents">
@@ -326,6 +328,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/mysql-learn2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="lxf">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lxf's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/10/mysql-learn2/" class="post-title-link" itemprop="url">MySql学习整理(二)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-10 10:33:08" itemprop="dateCreated datePublished" datetime="2021-03-10T10:33:08+08:00">2021-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-19 23:06:37" itemprop="dateModified" datetime="2021-03-19T23:06:37+08:00">2021-03-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">数据库学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="MYSQL学习整理-二"><a href="#MYSQL学习整理-二" class="headerlink" title="MYSQL学习整理(二)"></a>MYSQL学习整理(二)</h3><h6 id="关键字：default-默认值"><a href="#关键字：default-默认值" class="headerlink" title="关键字：default 默认值"></a>关键字：default 默认值</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 创建时添加</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">    P_Id int NOT NULL,</span><br><span class="line">    LastName varchar(255) NOT NULL,</span><br><span class="line">    FirstName varchar(255),</span><br><span class="line">    Address varchar(255),</span><br><span class="line">    City varchar(255) DEFAULT &#39;Sandnes&#39;</span><br><span class="line">);</span><br><span class="line"># 默认时间</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(</span><br><span class="line">    O_Id int NOT NULL,</span><br><span class="line">    OrderNo int NOT NULL,</span><br><span class="line">    P_Id int,</span><br><span class="line">    OrderDate date DEFAULT GETDATE()</span><br><span class="line">);</span><br><span class="line"># 向已创建表添加单个约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ALTER City SET DEFAULT &#39;SANDNES&#39;</span><br><span class="line"># 删除约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ALTER City DROP DEFAULT</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/10/mysql-learn2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/mysql-learn1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -357,7 +440,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-17 16:41:10" itemprop="dateModified" datetime="2021-03-17T16:41:10+08:00">2021-03-17</time>
+                <time title="修改时间：2021-03-19 23:07:19" itemprop="dateModified" datetime="2021-03-19T23:07:19+08:00">2021-03-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -384,183 +467,9 @@
 <p>注意：以下整理基于mysql，有些语法在sql sever和oracle中会有不同</p>
 </blockquote>
 <figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动mysql</span></span><br><span class="line">mysql.server start</span><br><span class="line"><span class="comment"># 登录mysql</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"><span class="comment"># 退出mysql</span></span><br><span class="line">mysql.server stop</span><br><span class="line"><span class="comment"># 查看数据库</span></span><br><span class="line">show databases;</span><br><span class="line"><span class="comment"># 进入某个表</span></span><br><span class="line">use test_db</span><br><span class="line"><span class="comment"># 查看表</span></span><br><span class="line">show tables;</span><br><span class="line"><span class="comment"># 查看表结构</span></span><br><span class="line">desc Persons;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：create-database-创建数据库"><a href="#关键字：create-database-创建数据库" class="headerlink" title="关键字：create database 创建数据库"></a>关键字：create database 创建数据库</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE dbname;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：drop-database-创建数据库"><a href="#关键字：drop-database-创建数据库" class="headerlink" title="关键字：drop database 创建数据库"></a>关键字：drop database 创建数据库</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE database_name;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：create-table-创建表"><a href="#关键字：create-table-创建表" class="headerlink" title="关键字：create table 创建表"></a>关键字：create table 创建表</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE table_name</span><br><span class="line">(</span><br><span class="line">column_name1 data_type(size) constraint_name,</span><br><span class="line">column_name2 data_type(size) constraint_name,</span><br><span class="line">column_name3 data_type(size) constraint_name,</span><br><span class="line">....</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>constraint_name 是约束</p>
-</blockquote>
-<p>sql中有如下约束：</p>
-<ol>
-<li>NOT NULL - 指示某列不能存储 NULL 值</li>
-<li>UNIQUE - 保证某列的每行必须有唯一的值</li>
-<li>PRIMARY KEY -主键- NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。</li>
-<li>FOREIGN KEY -外键- 保证一个表中的数据匹配另一个表中的值的参照完整性。</li>
-<li>CHECK - 保证列中的值符合指定的条件。</li>
-<li>DEFAULT - 规定没有给列赋值时的默认值。</li>
-</ol>
-<p><strong>not null</strong></p>
-<blockquote>
-<p>NOT NULL 约束强制列不接受 NULL 值。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 创建表时添加约束</span><br><span class="line">CREATE TABLE Persons (</span><br><span class="line">    ID int NOT NULL,</span><br><span class="line">    LastName varchar(255) NOT NULL,</span><br><span class="line">    FirstName varchar(255) NOT NULL,</span><br><span class="line">    Age int</span><br><span class="line">);</span><br><span class="line"># 向已创建表添加 not null 约束</span><br><span class="line"># ALTER TABLE table_name MODIFY column_name datatype 修改数据类型</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">MODIFY Age int NOT NULL;</span><br><span class="line"># 向已创建表删除 not null 约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">MODIFY Age int NULL;</span><br></pre></td></tr></table></figure>
-<p><strong>unique</strong></p>
-<blockquote>
-<p>每个表可以有多个 UNIQUE 约束，但是每个表只能有一个 PRIMARY KEY 约束。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 单列unique</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">P_Id int NOT NULL,</span><br><span class="line">LastName varchar(255) NOT NULL,</span><br><span class="line">FirstName varchar(255),</span><br><span class="line">Address varchar(255),</span><br><span class="line">City varchar(255),</span><br><span class="line">UNIQUE (P_Id)</span><br><span class="line">)</span><br><span class="line"># 命名 unique 约束，并定义多个列的 unique 约束</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">P_Id int NOT NULL,</span><br><span class="line">LastName varchar(255) NOT NULL,</span><br><span class="line">FirstName varchar(255),</span><br><span class="line">Address varchar(255),</span><br><span class="line">City varchar(255),</span><br><span class="line">CONSTRAINT uc_PersonID UNIQUE (P_Id,LastName)</span><br><span class="line">)</span><br><span class="line"># 向已创建表添加 unique 约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ADD UNIQUE (P_Id)</span><br><span class="line"># 向已创建表添加命名 unique 约束，并定义多个列的 unique 约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ADD CONSTRAINT uc_PersonID UNIQUE (P_Id,LastName)</span><br><span class="line"># 删除约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">DROP INDEX uc_PersonID</span><br></pre></td></tr></table></figure>
-<p><strong>primary key</strong></p>
-<blockquote>
-<p>PRIMARY KEY 约束唯一标识数据库表中的每条记录。<br>主键必须包含唯一的值。<br>主键列不能包含 NULL 值。<br>每个表都应该有一个主键，并且每个表只能有一个主键。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 创建表时添加约束</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">P_Id int NOT NULL,</span><br><span class="line">LastName varchar(255) NOT NULL,</span><br><span class="line">FirstName varchar(255),</span><br><span class="line">Address varchar(255),</span><br><span class="line">City varchar(255),</span><br><span class="line">PRIMARY KEY (P_Id)</span><br><span class="line">)</span><br><span class="line"># 组合主键 </span><br><span class="line"># 注意：其中只有一个主键pk_PersonID</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">P_Id int NOT NULL,</span><br><span class="line">LastName varchar(255) NOT NULL,</span><br><span class="line">FirstName varchar(255),</span><br><span class="line">Address varchar(255),</span><br><span class="line">City varchar(255),</span><br><span class="line">CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)</span><br><span class="line">)</span><br><span class="line"># 向已创建表添加约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ADD PRIMARY KEY (P_Id)</span><br><span class="line"># 向已创建表添加组合约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ADD CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)</span><br><span class="line"># 删除约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">DROP PRIMARY KEY pk_PersonID</span><br></pre></td></tr></table></figure>
-<p><strong>foreign key</strong></p>
-<blockquote>
-<p>一个表中的 FOREIGN KEY 指向另一个表中的 UNIQUE KEY(唯一约束的键)。<br>FOREIGN KEY 约束用于预防破坏表之间连接的行为。<br>FOREIGN KEY 约束也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Orders</span><br><span class="line">(</span><br><span class="line">O_Id int NOT NULL,</span><br><span class="line">OrderNo int NOT NULL,</span><br><span class="line">P_Id int,</span><br><span class="line">PRIMARY KEY (O_Id),</span><br><span class="line">FOREIGN KEY (P_Id) REFERENCES Persons(P_Id)</span><br><span class="line">)</span><br><span class="line"># MySQL允许我们在表中的多个列上添加FOREIGN KEY约束。条件是子表中的每个外键都必须引用不同的父表。</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(</span><br><span class="line">O_Id int NOT NULL,</span><br><span class="line">OrderNo int NOT NULL,</span><br><span class="line">P_Id int,</span><br><span class="line">PRIMARY KEY (O_Id),</span><br><span class="line">CONSTRAINT fk_PerOrders FOREIGN KEY (P_Id)</span><br><span class="line">REFERENCES Persons(P_Id)</span><br><span class="line">)</span><br><span class="line"># 向已创建表约束</span><br><span class="line">ALTER TABLE Orders</span><br><span class="line">ADD FOREIGN KEY (P_Id)</span><br><span class="line">REFERENCES Persons(P_Id)</span><br><span class="line"># 向已创建表添加多个约束，需要保证子表中的每个外键都必须引用不同的父表</span><br><span class="line">ALTER TABLE Orders</span><br><span class="line">ADD CONSTRAINT fk_PerOrders</span><br><span class="line">FOREIGN KEY (P_Id)</span><br><span class="line">REFERENCES Persons(P_Id)</span><br><span class="line"># 删除约束</span><br><span class="line">ALTER TABLE Orders</span><br><span class="line">DROP FOREIGN KEY fk_PerOrders</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：drop-table-删除表包括数据-表本身"><a href="#关键字：drop-table-删除表包括数据-表本身" class="headerlink" title="关键字：drop table 删除表包括数据+表本身"></a>关键字：drop table 删除表包括数据+表本身</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE table_name;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：truncate-table-删除表数据-保留表本身"><a href="#关键字：truncate-table-删除表数据-保留表本身" class="headerlink" title="关键字：truncate table 删除表数据 保留表本身"></a>关键字：truncate table 删除表数据 保留表本身</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRUNCATE TABLE table_name;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：select-查询"><a href="#关键字：select-查询" class="headerlink" title="关键字：select 查询"></a>关键字：select 查询</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name,column_name</span><br><span class="line">FROM table_name;</span><br><span class="line">SELECT * FROM table_name;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：distinct-去重"><a href="#关键字：distinct-去重" class="headerlink" title="关键字：distinct 去重"></a>关键字：distinct 去重</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT column_name,column_name</span><br><span class="line">FROM table_name;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>牛客网对应知识点题目链接：<br>SQL8找出所有员工当前具体的薪水salary情况:<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/ae51e6d057c94f6d891735a48d1c2397?tpId=82&amp;tqId=29760&amp;rp=1&amp;ru=/ta/sql&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/ae51e6d057c94f6d891735a48d1c2397?tpId=82&amp;tqId=29760&amp;rp=1&amp;ru=%2Fta%2Fsql&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a></p>
-</blockquote>
-<h6 id="关键字：where-过滤记录"><a href="#关键字：where-过滤记录" class="headerlink" title="关键字：where 过滤记录"></a>关键字：where 过滤记录</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name,column_name</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE column_name operator value;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：and-or-基于一个以上的条件对记录进行过滤"><a href="#关键字：and-or-基于一个以上的条件对记录进行过滤" class="headerlink" title="关键字：and /or 基于一个以上的条件对记录进行过滤"></a>关键字：and /or 基于一个以上的条件对记录进行过滤</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM Websites</span><br><span class="line">WHERE alexa &gt; 15</span><br><span class="line">AND (country&#x3D;&#39;CN&#39; OR country&#x3D;&#39;USA&#39;);</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：order-by-排序"><a href="#关键字：order-by-排序" class="headerlink" title="关键字：order by 排序"></a>关键字：order by 排序</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name,column_name</span><br><span class="line">FROM table_name</span><br><span class="line">ORDER BY column_name,column_name ASC|DESC; #ASC升序 DESC降序</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：insert-into-插入"><a href="#关键字：insert-into-插入" class="headerlink" title="关键字：insert into 插入"></a>关键字：insert into 插入</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO table_name (column1,column2,column3,...)</span><br><span class="line">VALUES (value1,value2,value3,...);</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：update-更新"><a href="#关键字：update-更新" class="headerlink" title="关键字：update 更新"></a>关键字：update 更新</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table_name</span><br><span class="line">SET column1&#x3D;value1,column2&#x3D;value2,...</span><br><span class="line">WHERE some_column&#x3D;some_value;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：delete-删除"><a href="#关键字：delete-删除" class="headerlink" title="关键字：delete 删除"></a>关键字：delete 删除</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM table_name</span><br><span class="line">WHERE some_column&#x3D;some_value;</span><br><span class="line"># 删除全部数据</span><br><span class="line">DELETE FROM table_name;</span><br><span class="line">DELETE * FROM table_name;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：limit-返回指定数目记录"><a href="#关键字：limit-返回指定数目记录" class="headerlink" title="关键字：limit 返回指定数目记录"></a>关键字：limit 返回指定数目记录</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table_name</span><br><span class="line">LIMIT number;</span><br><span class="line"># 返回某个位置开始的指定数目记录</span><br><span class="line"># 以下表示，从第2条记录往后取1条记录（即是第三条记录）</span><br><span class="line">limit 1 offset 2</span><br><span class="line">limit 2,1</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>牛客网对应知识点题目链接：</p>
-<ol>
-<li>SQL2 查找入职员工时间排名倒数第三的员工所有信息:<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/ec1ca44c62c14ceb990c3c40def1ec6c?tpId=82&amp;tqId=29754&amp;rp=1&amp;ru=/ta/sql&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/ec1ca44c62c14ceb990c3c40def1ec6c?tpId=82&amp;tqId=29754&amp;rp=1&amp;ru=%2Fta%2Fsql&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a></li>
-</ol>
-</blockquote>
-<h6 id="关键字：like-在-WHERE-子句中搜索列中的指定模式"><a href="#关键字：like-在-WHERE-子句中搜索列中的指定模式" class="headerlink" title="关键字：like 在 WHERE 子句中搜索列中的指定模式"></a>关键字：like 在 WHERE 子句中搜索列中的指定模式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE column_name LIKE pattern;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：in-在-WHERE-子句中规定多个值"><a href="#关键字：in-在-WHERE-子句中规定多个值" class="headerlink" title="关键字：in 在 WHERE 子句中规定多个值"></a>关键字：in 在 WHERE 子句中规定多个值</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE column_name IN (value1,value2,...);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>牛客网对应知识点题目链接：</p>
-<ol>
-<li>SQL12<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/4a052e3e1df5435880d4353eb18a91c6?tpId=82&amp;tqId=29764&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/4a052e3e1df5435880d4353eb18a91c6?tpId=82&amp;tqId=29764&amp;rp=1&amp;ru=%2Factivity%2Foj&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a></li>
-</ol>
-</blockquote>
-<h6 id="关键字：between-范围"><a href="#关键字：between-范围" class="headerlink" title="关键字：between 范围"></a>关键字：between 范围</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE column_name BETWEEN value1 AND value2;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：as-别名"><a href="#关键字：as-别名" class="headerlink" title="关键字：as 别名"></a>关键字：as 别名</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 列别名</span><br><span class="line">SELECT column_name AS alias_name</span><br><span class="line">FROM table_name;</span><br><span class="line"># 表别名</span><br><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table_name AS alias_name;</span><br><span class="line"># 多列合并别名 concat</span><br><span class="line">SELECT name, CONCAT(url, &#39;, &#39;, alexa, &#39;, &#39;, country) AS site_info</span><br><span class="line">FROM Websites;</span><br></pre></td></tr></table></figure>
-<p>使用别名的情况：</p>
-<ol>
-<li>在查询中涉及超过一个表</li>
-<li>在查询中使用了函数</li>
-<li>列名称很长或者可读性差</li>
-<li>需要把两个列或者多个列结合在一起</li>
-</ol>
-<h6 id="关键字：join-表连接-横向连接（列合并）"><a href="#关键字：join-表连接-横向连接（列合并）" class="headerlink" title="关键字：join 表连接 横向连接（列合并）"></a>关键字：join 表连接 横向连接（列合并）</h6><p><strong>inner join/join 两者是相同的</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#inner join</span><br><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1</span><br><span class="line">INNER JOIN table2</span><br><span class="line">ON table1.column_name&#x3D;table2.column_name;</span><br><span class="line"># join</span><br><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1</span><br><span class="line">JOIN table2</span><br><span class="line">ON table1.column_name&#x3D;table2.column_name;</span><br></pre></td></tr></table></figure>
-<p><strong>left join</strong></p>
-<blockquote>
-<p>关键字从左表（table1）返回所有的行，即使右表（table2）中没有匹配。如果右表中没有匹配，则结果为 NULL.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1</span><br><span class="line">LEFT JOIN table2</span><br><span class="line">ON table1.column_name&#x3D;table2.column_name;</span><br></pre></td></tr></table></figure>
-<p><strong>right join</strong></p>
-<blockquote>
-<p>关键字从右表（table2）返回所有的行，即使左表（table1）中没有匹配。如果左表中没有匹配，则结果为 NULL。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1</span><br><span class="line">RIGHT JOIN table2</span><br><span class="line">ON table1.column_name&#x3D;table2.column_name;</span><br></pre></td></tr></table></figure>
-<p><strong>full join</strong></p>
-<blockquote>
-<p>关键字只要左表（table1）和右表（table2）其中一个表中存在匹配，则返回行。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1</span><br><span class="line">RIGHT JOIN table2</span><br><span class="line">ON table1.column_name&#x3D;table2.column_name;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>牛客网对应知识点题目链接：<br>SQL3 查找各个部门当前领导当前薪水详情以及其对应部门编号dept_no:<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/c63c5b54d86e4c6d880e4834bfd70c3b?tpId=82&amp;tqId=29755&amp;rp=1&amp;ru=/ta/sql&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/c63c5b54d86e4c6d880e4834bfd70c3b?tpId=82&amp;tqId=29755&amp;rp=1&amp;ru=%2Fta%2Fsql&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a><br>SQL4 查找所有已经分配部门的员工的last_name和first_name:<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/6d35b1cd593545ab985a68cd86f28671?tpId=82&amp;tqId=29756&amp;rp=1&amp;ru=/ta/sql&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/6d35b1cd593545ab985a68cd86f28671?tpId=82&amp;tqId=29756&amp;rp=1&amp;ru=%2Fta%2Fsql&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a><br><strong>多表连接类</strong><br>SQL19<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/5a7975fabe1146329cee4f670c27ad55?tpId=82&amp;tqId=29771&amp;rp=1&amp;ru=/ta/sql&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/5a7975fabe1146329cee4f670c27ad55?tpId=82&amp;tqId=29771&amp;rp=1&amp;ru=%2Fta%2Fsql&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a><br>SQL21<br><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/fc7344ece7294b9e98401826b94c6ea5?tpId=82&amp;tqId=29773&amp;rp=1&amp;ru=/ta/sql&amp;qru=/ta/sql/question-ranking&amp;tab=answerKey">https://www.nowcoder.com/practice/fc7344ece7294b9e98401826b94c6ea5?tpId=82&amp;tqId=29773&amp;rp=1&amp;ru=%2Fta%2Fsql&amp;qru=%2Fta%2Fsql%2Fquestion-ranking&amp;tab=answerKey</a></p>
-</blockquote>
-<h6 id="关键字：union-合并两个或多个-select-语句的结果集-纵向合并（表合并）"><a href="#关键字：union-合并两个或多个-select-语句的结果集-纵向合并（表合并）" class="headerlink" title="关键字：union 合并两个或多个 select 语句的结果集 纵向合并（表合并）"></a>关键字：union 合并两个或多个 select 语句的结果集 纵向合并（表合并）</h6><blockquote>
-<p>请注意，union 内部的每个 select 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每个 select 语句中的列的顺序必须相同。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 默认地，UNION 操作符选取不同的值。如果允许重复的值，请使用 UNION ALL。</span><br><span class="line">SELECT column_name(s) FROM table1</span><br><span class="line">UNION</span><br><span class="line">SELECT column_name(s) FROM table2;</span><br><span class="line"># union all</span><br><span class="line">SELECT column_name(s) FROM table1</span><br><span class="line">UNION ALL</span><br><span class="line">SELECT column_name(s) FROM table2;</span><br><span class="line"># UNION 结果集中的列名总是等于 UNION 中第一个 SELECT 语句中的列名。</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：insert-into-select-复制"><a href="#关键字：insert-into-select-复制" class="headerlink" title="关键字：insert into select 复制"></a>关键字：insert into select 复制</h6><blockquote>
-<p>从一个表复制数据，然后把数据插入到一个已存在的表中</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 复制全部</span><br><span class="line">INSERT INTO table2</span><br><span class="line">SELECT * FROM table1;</span><br><span class="line"># 复制部分</span><br><span class="line">INSERT INTO table2 (column_name(s))</span><br><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1;</span><br></pre></td></tr></table></figure>
-<h6 id="关键字：check-约束用于限制列中的值的范围"><a href="#关键字：check-约束用于限制列中的值的范围" class="headerlink" title="关键字：check  约束用于限制列中的值的范围"></a>关键字：check  约束用于限制列中的值的范围</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 创建时添加单个约束</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">P_Id int NOT NULL,</span><br><span class="line">LastName varchar(255) NOT NULL,</span><br><span class="line">FirstName varchar(255),</span><br><span class="line">Address varchar(255),</span><br><span class="line">City varchar(255),</span><br><span class="line">CHECK (P_Id&gt;0)</span><br><span class="line">)</span><br><span class="line"># 创建时添加多个约束</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">P_Id int NOT NULL,</span><br><span class="line">LastName varchar(255) NOT NULL,</span><br><span class="line">FirstName varchar(255),</span><br><span class="line">Address varchar(255),</span><br><span class="line">City varchar(255),</span><br><span class="line">CONSTRAINT chk_Person CHECK (P_Id&gt;0 AND City&#x3D;&#39;Sandnes&#39;)</span><br><span class="line">)</span><br><span class="line"># 向已创建表添加单个约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ADD CHECK (P_Id&gt;0)</span><br><span class="line"># 向已创建表添加多个约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ADD CONSTRAINT chk_Person CHECK (P_Id&gt;0 AND City&#x3D;&#39;Sandnes&#39;)</span><br><span class="line"># 删除约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">DROP CHECK chk_Person</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/mysql-learn2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="lxf">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lxf's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/10/mysql-learn2/" class="post-title-link" itemprop="url">MySql学习整理(一)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-10 10:33:08" itemprop="dateCreated datePublished" datetime="2021-03-10T10:33:08+08:00">2021-03-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-17 16:44:14" itemprop="dateModified" datetime="2021-03-17T16:44:14+08:00">2021-03-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">数据库学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="MYSQL学习整理-二"><a href="#MYSQL学习整理-二" class="headerlink" title="MYSQL学习整理(二)"></a>MYSQL学习整理(二)</h3><h6 id="关键字：default-默认值"><a href="#关键字：default-默认值" class="headerlink" title="关键字：default 默认值"></a>关键字：default 默认值</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 创建时添加</span><br><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">    P_Id int NOT NULL,</span><br><span class="line">    LastName varchar(255) NOT NULL,</span><br><span class="line">    FirstName varchar(255),</span><br><span class="line">    Address varchar(255),</span><br><span class="line">    City varchar(255) DEFAULT &#39;Sandnes&#39;</span><br><span class="line">);</span><br><span class="line"># 默认时间</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(</span><br><span class="line">    O_Id int NOT NULL,</span><br><span class="line">    OrderNo int NOT NULL,</span><br><span class="line">    P_Id int,</span><br><span class="line">    OrderDate date DEFAULT GETDATE()</span><br><span class="line">);</span><br><span class="line"># 向已创建表添加单个约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ALTER City SET DEFAULT &#39;SANDNES&#39;</span><br><span class="line"># 删除约束</span><br><span class="line">ALTER TABLE Persons</span><br><span class="line">ALTER City DROP DEFAULT</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/10/mysql-learn2/#more" rel="contents">
+              <a class="btn" href="/2021/03/10/mysql-learn1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
