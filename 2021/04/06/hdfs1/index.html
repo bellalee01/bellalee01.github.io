@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/xxw/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近想要系统的学习大数据开发的知识，目前主要是跟着大数据入门指南进行学习，博客会在学习的基础上加入一些自己的思考。资料来源：https:&#x2F;&#x2F;github.com&#x2F;heibaiying&#x2F;BigData-Notes Hadoop分布式文件系统——HDFS1 介绍HDFS (Hadoop Distributed File System)是 Hadoop 下的分布式文件系统，具有高容错、高吞吐 量等特性，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop分布式文件系统——HDFS">
+<meta property="og:url" content="http://example.com/2021/04/06/hdfs1/index.html">
+<meta property="og:site_name" content="lxf&#39;s blog">
+<meta property="og:description" content="最近想要系统的学习大数据开发的知识，目前主要是跟着大数据入门指南进行学习，博客会在学习的基础上加入一些自己的思考。资料来源：https:&#x2F;&#x2F;github.com&#x2F;heibaiying&#x2F;BigData-Notes Hadoop分布式文件系统——HDFS1 介绍HDFS (Hadoop Distributed File System)是 Hadoop 下的分布式文件系统，具有高容错、高吞吐 量等特性，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.lixuefei96.com/%E6%88%AA%E5%B1%8F2021-04-02%20%E4%B8%8A%E5%8D%8811.17.03.png">
+<meta property="og:image" content="http://img.lixuefei96.com/%E6%88%AA%E5%B1%8F2021-04-02%20%E4%B8%8B%E5%8D%883.00.21.png">
+<meta property="article:published_time" content="2021-04-06T07:15:34.000Z">
+<meta property="article:modified_time" content="2021-04-06T07:25:44.995Z">
+<meta property="article:author" content="lxf">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="HDFS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.lixuefei96.com/%E6%88%AA%E5%B1%8F2021-04-02%20%E4%B8%8A%E5%8D%8811.17.03.png">
+
+<link rel="canonical" href="http://example.com/2021/04/06/hdfs1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hadoop分布式文件系统——HDFS | lxf's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lxf's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/06/hdfs1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="lxf">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lxf's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop分布式文件系统——HDFS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-06 15:15:34 / 修改时间：15:25:44" itemprop="dateCreated datePublished" datetime="2021-04-06T15:15:34+08:00">2021-04-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">大数据入门指南学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近想要系统的学习大数据开发的知识，目前主要是跟着大数据入门指南进行学习，博客会在学习的基础上加入一些自己的思考。<br>资料来源：<a target="_blank" rel="noopener" href="https://github.com/heibaiying/BigData-Notes">https://github.com/heibaiying/BigData-Notes</a></p>
+<h3 id="Hadoop分布式文件系统——HDFS"><a href="#Hadoop分布式文件系统——HDFS" class="headerlink" title="Hadoop分布式文件系统——HDFS"></a>Hadoop分布式文件系统——HDFS</h3><h5 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h5><p>HDFS (Hadoop Distributed File System)是 Hadoop 下的分布式文件系统，具有高容错、高吞吐 量等特性，可以部署在低成本的硬件上。</p>
+<h5 id="2-HDFS-设计原理"><a href="#2-HDFS-设计原理" class="headerlink" title="2 HDFS 设计原理"></a>2 HDFS 设计原理</h5><h6 id="2-1-HDFS-架构"><a href="#2-1-HDFS-架构" class="headerlink" title="2.1 HDFS 架构"></a>2.1 HDFS 架构</h6><p>HDFS 遵循主/从架构，由单个 NameNode(NN) 和多个 DataNode(DN) 组成:<br><strong>NameNode</strong> : 负责执行有关<strong>文件系统命名空间</strong>的操作，例如打开，关闭、重命名文件和目录等。 它同时还负责集群元数据的存储，记录着文件中各个数据块的位置信息。<br><strong>DataNode</strong>:负责提供来自文件系统客户端的读写请求，执行块的创建，删除等操作。</p>
+<h6 id="2-2-文件系统命名空间"><a href="#2-2-文件系统命名空间" class="headerlink" title="2.2 文件系统命名空间"></a>2.2 文件系统命名空间</h6><p>HDFS 的 文件系统命名空间 的层次结构与大多数文件系统类似 (如 Linux)， 支持目录和文件的创建、移 动、删除和重命名等操作，支持配置用户和访问权限，但不支持<strong>硬链接和软连接</strong>。NameNode 负责维护文件系统名称空间，记录对名称空间或其属性的任何更改。</p>
+<p>但是这篇文章里说HDFS实现了软连接但是没有实现硬链接：<br>HDFS符号链接和硬链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Androidlushangderen/article/details/52808554">https://blog.csdn.net/Androidlushangderen/article/details/52808554</a></p>
+<ul>
+<li>与Linux文件系统中的软链接概念一样，HDFS符号链接也是相当于给目标文件新建一个自定义路径，这个自定义路径实质指向目标文件。所以在这里HDFS符号链接中做的最重要的事情就是路径的解析。而且这个解析还有可能是嵌套的，符号链接中指向的是另外一个符号链接。</li>
+</ul>
+<a id="more"></a>
+
+<p>一些概念：</p>
+<blockquote>
+<p>文件存储</p>
+</blockquote>
+<p>文件都有文件名与数据，这在 Linux 上被分成两个部分：用户数据 (user data) 与元数据 (metadata)。用户数据，即文件数据块 (data block)，数据块是记录文件真实内容的地方；而元数据则是文件的附加属性，如文件大小、创建时间、所有者等信息。在 Linux 中，元数据中的 inode 号（inode 是文件元数据的一部分但其并不包含文件名，inode 号即索引节点号）才是文件的唯一标识而非文件名。文件名仅是为了方便人们的记忆和使用，系统或程序通过 inode 号寻找正确的文件数据块。而有一种方法可以快速的寻找到数据元，那就是软硬链接。</p>
+<blockquote>
+<p>POSIX</p>
+</blockquote>
+<p>POSIX表示可移植操作系统接口（Portable Operating System Interface of UNIX，缩写为 POSIX ），POSIX标准定义了操作系统应该为应用程序提供的接口标准。POSIX标准意在期望获得源代码级别的软件可移植性。</p>
+<blockquote>
+<p>硬链接和软连接</p>
+</blockquote>
+<p>链接简单说实际上是一种文件共享的方式，是 POSIX 中的概念，主流文件系统都支持链接文件。利用链接可以快速找到数据元。</p>
+<p>文件的 inode 值指向了物理硬盘的一个区块，事实上文件系统会维护一个引用计数，只要有文件指向这个区块，它就不会从硬盘上消失。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Linux touch命令用于修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> &gt; file 显示结果定向至文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch myfile &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;This is a plain text file.&quot;</span> &gt; myfile</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ln myfile hard</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -li</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ln -s myfile soft</span></span><br></pre></td></tr></table></figure>
+<p>硬链接的inode 值和源文件相同，都指向同一个区块，是完全一样的文件，修改hard也会修改myfile。删除源文件对硬链接没有丝毫地影响，因为它 inode 所指向的区块由于有一个硬链接在指向它，所以这个区块仍然有效，并且可以访问到。</p>
+<p>软链接（也就是符号链接）的 inode与源文件不同，文件类型不同，软链接的 inode 所指向的内容实际上是保存了一个绝对路径，当用户访问这个文件时，系统会自动将其替换成其所指的文件路径，当文件被删除时，会显示无法找到该文件。</p>
+<h6 id="2-3-数据复制"><a href="#2-3-数据复制" class="headerlink" title="2.3 数据复制"></a>2.3 数据复制</h6><p>由于 Hadoop 被设计运行在廉价的机器上，这意味着硬件是不可靠的，为了保证容错性，HDFS 提供了 数据复制机制。HDFS 将每一个文件存储为一系列块，每个块由多个副本来保证容错，块的大小和复制因子可以自行配置(默认情况下，块大小是 128M，默认复制因子是 3)。<strong>数据复制通过副本机制实现。</strong></p>
+<blockquote>
+<p>Rack 机架</p>
+</blockquote>
+<p>HDFS的机架感知策略 <a target="_blank" rel="noopener" href="http://blog.itpub.net/69917874/viewspace-2698442/">http://blog.itpub.net/69917874/viewspace-2698442/</a><br>通常来说大型的Hadoop集群是以机架的形式来组织的他们分布在不同的机架上面，同一个机架节点往往通过同一个网络交换机连接，在网络宽带方面比跨机架通信有较大优势。</p>
+<blockquote>
+<p>三副本机制</p>
+</blockquote>
+<img src='http://img.lixuefei96.com/%E6%88%AA%E5%B1%8F2021-04-02%20%E4%B8%8A%E5%8D%8811.17.03.png' style="zoom:39%;">
+
+<p>但是另一个推文里说hadoop 3.x</p>
+<p>第一个副本放在client所在节点，另外两个副本放在不同机架上</p>
+<p><strong>超过3个副本多余的副本则会随机放</strong></p>
+<blockquote>
+<p>副本机制的作用</p>
+</blockquote>
+<ul>
+<li>极大程度上避免了宕机所造成的数据丢失</li>
+<li>可以在数据读取时进行数据校验</li>
+</ul>
+<h6 id="2-4-副本的选择"><a href="#2-4-副本的选择" class="headerlink" title="2.4 副本的选择"></a>2.4 副本的选择</h6><p>为了最大限度地减少带宽消耗和读取延迟，HDFS 在执行读取请求时，优先读取距离读取器最近的副本。如果在与读取器节点相同的机架上存在副本，则优先选择该副本。如果 HDFS 群集跨越多个数据中心，则优先选择本地数据中心上的副本。</p>
+<h6 id="2-5-架构的稳定性"><a href="#2-5-架构的稳定性" class="headerlink" title="2.5 架构的稳定性"></a>2.5 架构的稳定性</h6><p><strong>2.5.1 心跳机制和重新复制</strong></p>
+<p>每个 DataNode 定期向 NameNode 发送心跳消息，如果超过指定时间没有收到心跳消息，则将 DataNode 标记为死亡。NameNode 不会将任何新的 IO 请求转发给标记为死亡的 DataNode，也不会 再使用这些 DataNode 上的数据。 由于数据不再可用，可能会导致某些块的复制因子小于其指定值， NameNode 会跟踪这些块，并在必要的时候进行重新复制。</p>
+<p>hdfs心跳机制：<a target="_blank" rel="noopener" href="https://blog.csdn.net/album_gyd/article/details/76686206">https://blog.csdn.net/album_gyd/article/details/76686206</a><br><img src='http://img.lixuefei96.com/%E6%88%AA%E5%B1%8F2021-04-02%20%E4%B8%8B%E5%8D%883.00.21.png' style="zoom:39%;"></p>
+<blockquote>
+<p>IPC(Inter-Process Communication)进程间通信，提供了各种进程间通信的方法。</p>
+</blockquote>
+<p>IPC的方式通常有管道(包括无名管道和命名管道)、消息队列、信号量、共享存储、Socket、Streams等。其中 Socket和Streams支持不同主机上的两个进程IPC。</p>
+<blockquote>
+<p>进程间的通信方式</p>
+</blockquote>
+<p>面试必备-进程间的五种通信方式：<a target="_blank" rel="noopener" href="https://network.51cto.com/art/201911/606827.htm?mobile">https://network.51cto.com/art/201911/606827.htm?mobile</a><br>什么是消息队列：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/54152397?sort=created">https://www.zhihu.com/question/54152397?sort=created</a><br>跨进程通信之Socket-理论1：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62522151">https://zhuanlan.zhihu.com/p/62522151</a></p>
+<p>1.无名管道( pipe )： 管道是一种半双工的通信方式，数据只能单向流动，而且只能在具有亲缘关系的进程间使用。进程的亲缘关系通常是指父子进程关系。</p>
+<p>2.高级管道(popen)： 将另一个程序当做一个新的进程在当前程序进程中启动，则它算是当前程序的子进程，这种方式我们成为高级管道方式。</p>
+<p>3.有名管道 (named pipe) ： 有名管道也是半双工的通信方式，但是它允许无亲缘关系进程间的通信。</p>
+<p>4.消息队列( message queue ) ： 消息队列是由消息的链表，存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
+<p>5.信号量( semophore ) ： 信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。信号量用于实现进程间的互斥与同步，而不是用于存储进程间通信数据。</p>
+<p>6.信号 ( sinal ) ： 信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</p>
+<p>7.共享内存( shared memory ) ： 共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针对其他进程间通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
+<p>8.套接字( socket ) ： 套解字也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同机器间的进程通信。</p>
+<p><strong>2.5.2 数据的完整性</strong></p>
+<p>​    由于存储设备故障等原因，存储在 DataNode 上的数据块也会发生损坏。为了避免读取到已经损坏的数据而导致错误，HDFS 提供了数据完整性校验机制来保证数据的完整性，具体操作如下:</p>
+<p>​    当客户端创建 HDFS 文件时，它会计算文件的每个块的 校验和 ，并将 校验和 存储在同一 HDFS 命名空间下的单独的隐藏文件中。当客户端检索文件内容时，它会验证从每个 DataNode 接收的数据是否与存储在关联校验和文件中的 校验和 匹配。如果匹配失败，则证明数据已经损坏，此时客户端会选择从其他 DataNode 获取该块的其他可用副本。</p>
+<p><strong>2.5.3 元数据的磁盘故障</strong></p>
+<p>FsImage 和 EditLog 是 HDFS 的核心数据，这些数据的意外丢失可能会导致整个 HDFS 服务不可 用。为了避免这个问题，可以配置 NameNode 使其支持 FsImage 和 EditLog 多副本同步，这样<br>FsImage 或 EditLog 的任何改变都会引起每个副本 FsImage 和 EditLog 的同步更新。</p>
+<p><strong>2.5.4 支持快照</strong></p>
+<p>快照支持在特定时刻存储数据副本，在数据意外损坏时，可以通过回滚操作恢复到健康的数据状态。</p>
+<h5 id="3-HDFS-设计原理"><a href="#3-HDFS-设计原理" class="headerlink" title="3 HDFS 设计原理"></a>3 HDFS 设计原理</h5><p>高容错: 由于 HDFS 采用数据的多副本方案，所以部分硬件的损坏不会导致全部数据的丢失。<br>高吞吐量: HDFS 设计的重点是支持高吞吐量的数据访问，而不是低延迟的数据访问。<br>大文件支持: HDFS 适合于大文件的存储，文档的大小应该是是 GB 到 TB 级别的。<br>简单一致性模型: HDFS 更适合于一次写入多次读取 (write-once-read-many) 的访问模型。支持将内容追加到文件末尾， 但不支持数据的随机访问，不能从文件任意位置新增数据。<br>跨平台移植性: HDFS 具有良好的跨平台移植性，这使得其他大数据计算框架都将其作为数据持久化存储的首选方案。</p>
+<blockquote>
+<p>故障检测机制</p>
+</blockquote>
+<p>故障的类型主要有以下三种，针对这三种故障类型，HDFS提供了不同的故障检测机制：</p>
+<ul>
+<li>针对<font color=#A52A2A face="微软雅黑">DataNode失效</font>问题，HDFS使用了心跳机制，DataNode定期向NameNode发送心跳信息，NameNode根据心跳信息判断DataNode是否存活；</li>
+<li>针对<font color=#A52A2A face="微软雅黑">网络故障</font>而导致无法收发数据的问题，HDFS提供了ACK的机制，在发送端发送数据后，如果没有收到ACK并且经过多次重试后仍然如此，则认为网络故障；</li>
+<li>针对<font color=#A52A2A face="微软雅黑">数据损坏</font>问题，所有DataNode会定期向NameNode发送自身存储的块清单，在传输数据的同时会发送总和校验码，NameNode依次来判断数据是否丢失或损坏。</li>
+</ul>
+<blockquote>
+<p>HDFS 容错机制</p>
+</blockquote>
+<p>2.x版本中：</p>
+<p><strong>读容错</strong></p>
+<p>由于在读HDFS的过程中会从NameNode获取到数据块位置列表，如果某个DataNode失效，换个DataNode读即可。</p>
+<p><strong>写容错</strong></p>
+<p>写HDFS的过程中会对多个DataNode建立管道进行写入，如果数据发送者没有收到其中某个DataNode的ACK，则认为该DataNode失效，会跳过该DataNode并将数据写入剩余DataNode。NameNode收集DataNode信息时发现文件的副本数与设置值不一致，会重新寻找一个DataNode保存副本。</p>
+<p><strong>DataNode失效</strong></p>
+<p>在NameNode中会持有数据块表和DataNode两张表。数据块表存储着某个数据块（包括副本）所在的DataNode，DataNode表存储着每个DataNode中保存的数据块列表。由于DataNode会周期性地给NameNode发送自己所持有的数据块信息，因此NameNode会持续更新数据块表和DataNode表。如果发现某个DataNode上的数据块错误，NameNode会从数据块表删除该数据块；如果发现某个DataNode失效，NameNode会对两张表进行更新。NameNode还会周期性地扫描数据块表，如果发现数据块表中某个数据库的备份数量低于所设置的备份数，则会协调从其它DataNode复制数据到另一个DataNode上完成备份。</p>
+<p><strong>NameNode失效</strong></p>
+<p>SecondaryNameNode的机制：</p>
+<p>SecondaryNameNode周期性的从NameNode 结点上下载磁盘镜像和日志文件（FsImage 和 EditLog），在本地将日志合并到镜像中，产生新的镜像，上传到NameNode，当NameNode结点重启时就会加载此最新的镜像文件，这个过程叫做CheckPoint，那么SecondaryNameNode会周期性的做CheckPoint，但是这种机制对于单点问题来说不是很理想，因为你做CheckPoint只能保存上次的元数据，那么CheckPoint之后的元数据在NameNode 失效后是会丢失的。</p>
+<p>Avatar机制：</p>
+<p>设置了一个叫做 Standby NameNode 的结点，原来的NameNode  叫做 PrimaryNameNode, 另外还有一个结点 NFS 用来存储 Primary NameNode 的日志和镜像文件。这里跟前面的解决机制不同的是 Standby NameNode 这个结点是 热备结点， 它不仅具有前面的CheckPoint的功能，还会周期性的读取 NFS结点上的 PrimaryNameNode 的日志来保持命名空间的同步，此外 DataNode 会同时向 Standby NameNode 和 PrimaryNameNode 发送心跳信息和数据块信息，这样，这两个结点的元数据信息是一致的，因此这也是为什么是热备结点的原因了。</p>
+<p>该机制主要是提供了一个 Standby NameNode 结点作为 热备 ，这两个NameNode 结点的元数据会保持一致，在PrimaryNameNode 宕机时，Standby NameNode 切换为 PrimaryNameNode 的时间很短。</p>
+<p>注： 镜像文件存储的是NameNode 的命名空间即目录树，就是将内存中的命名空间持久化到镜像文件中。</p>
+<blockquote>
+<p>热备和冷备的区别</p>
+</blockquote>
+<p>冷备份发生在数据库已经正常关闭的情况下，当正常关闭时会提供给我们一个完整的数据库。<br>热备份是在数据库运行的情况下，采用archivelog mode方式备份数据库的方法。<br>热备份一般用于保证服务正常不间断运行，用两台机器作为服务机器，一台用于实际数据库操作应用,另外一台实时的从前者中获取数据以保持数据一致.如果当前的机器熄火,备份的机器立马取代当前的机器继续提供服务</p>
+<blockquote>
+<p>NFS应用场景</p>
+</blockquote>
+<p>1、NFS（Network File system）是一种基于TCP/IP传输的网络文件系统协议<br>2、通过使用NFS协议，NFS客户机可以像访问本地目录一样访问远程NFS服务器中的共享资源。<br>3、在企业群集架构的工作场景中，特别是中小型网站公司，NFS网络文件系统一般被用来存储共享视频、图片等静态资源文件。列如将网站用户上传的文件放到NFS共享里面，通过网络共享，让网络上的其他服务器能够挂载访问共享目录内的数据</p>
+<p>3.x版本的不同：<br>2.x中通过复制（浪费空间）来处理容错，3.x可以通过Erasure编码处理容错</p>
+<p>Hadoop 3.x版本增添特性–纠删码介绍 <a target="_blank" rel="noopener" href="https://blog.csdn.net/czz1141979570/article/details/96997989">https://blog.csdn.net/czz1141979570/article/details/96997989</a></p>
+<ol>
+<li>纠删码可以将HDFS的存储开销降低约50%，同时与三分本策略一样，还可以保证数据的可用性。更准确的说是<strong>纠删码是一种比副本存储更节省存储空间的数据持久化存储方法</strong>。</li>
+<li>由于纠删码额外开销主要用于<strong>重建</strong>和<strong>远程读写</strong>，它通常用来存储不经常使用的数据（冷数据）。</li>
+<li>一旦数据需要恢复，它会造成2大资源的消耗：<ul>
+<li>网络带宽的消耗，因为数据恢复需要去读其他的数据块和校验块</li>
+<li>进行编码，解码计算需要消耗CPU资源</li>
+</ul>
+</li>
+<li>最好的选择是用于冷数据集群<ul>
+<li>冷数据集群往往有大量的长期没有被访问的数据,体量确实很大,采用EC技术,可以大大减少副本数</li>
+<li>冷数据集群基本稳定,耗资源量少,所以一旦进行数据恢复,将不会对集群造成大的影响</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+              <a href="/tags/HDFS/" rel="tag"># HDFS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/17/sort-summery1/" rel="prev" title="排序算法整理(一)">
+      <i class="fa fa-chevron-left"></i> 排序算法整理(一)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94HDFS"><span class="nav-number">1.</span> <span class="nav-text">Hadoop分布式文件系统——HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.0.1.</span> <span class="nav-text">1 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-HDFS-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.2.</span> <span class="nav-text">2 HDFS 设计原理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-1-HDFS-%E6%9E%B6%E6%9E%84"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">2.1 HDFS 架构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.2 文件系统命名空间</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">2.3 数据复制</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-4-%E5%89%AF%E6%9C%AC%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">2.4 副本的选择</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-5-%E6%9E%B6%E6%9E%84%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">2.5 架构的稳定性</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-HDFS-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.3.</span> <span class="nav-text">3 HDFS 设计原理</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lxf"
+      src="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
+  <p class="site-author-name" itemprop="name">lxf</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lixuefei@ict.ac.cn" title="E-Mail → mailto:lixuefei@ict.ac.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxf</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/xxw/anime.min.js"></script>
+  <script src="/xxw/velocity/velocity.min.js"></script>
+  <script src="/xxw/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

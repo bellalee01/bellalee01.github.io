@@ -160,6 +160,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/06/hdfs1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="lxf">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lxf's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/06/hdfs1/" class="post-title-link" itemprop="url">Hadoop分布式文件系统——HDFS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-06 15:15:34 / 修改时间：15:25:44" itemprop="dateCreated datePublished" datetime="2021-04-06T15:15:34+08:00">2021-04-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">大数据入门指南学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近想要系统的学习大数据开发的知识，目前主要是跟着大数据入门指南进行学习，博客会在学习的基础上加入一些自己的思考。<br>资料来源：<a target="_blank" rel="noopener" href="https://github.com/heibaiying/BigData-Notes">https://github.com/heibaiying/BigData-Notes</a></p>
+<h3 id="Hadoop分布式文件系统——HDFS"><a href="#Hadoop分布式文件系统——HDFS" class="headerlink" title="Hadoop分布式文件系统——HDFS"></a>Hadoop分布式文件系统——HDFS</h3><h5 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h5><p>HDFS (Hadoop Distributed File System)是 Hadoop 下的分布式文件系统，具有高容错、高吞吐 量等特性，可以部署在低成本的硬件上。</p>
+<h5 id="2-HDFS-设计原理"><a href="#2-HDFS-设计原理" class="headerlink" title="2 HDFS 设计原理"></a>2 HDFS 设计原理</h5><h6 id="2-1-HDFS-架构"><a href="#2-1-HDFS-架构" class="headerlink" title="2.1 HDFS 架构"></a>2.1 HDFS 架构</h6><p>HDFS 遵循主/从架构，由单个 NameNode(NN) 和多个 DataNode(DN) 组成:<br><strong>NameNode</strong> : 负责执行有关<strong>文件系统命名空间</strong>的操作，例如打开，关闭、重命名文件和目录等。 它同时还负责集群元数据的存储，记录着文件中各个数据块的位置信息。<br><strong>DataNode</strong>:负责提供来自文件系统客户端的读写请求，执行块的创建，删除等操作。</p>
+<h6 id="2-2-文件系统命名空间"><a href="#2-2-文件系统命名空间" class="headerlink" title="2.2 文件系统命名空间"></a>2.2 文件系统命名空间</h6><p>HDFS 的 文件系统命名空间 的层次结构与大多数文件系统类似 (如 Linux)， 支持目录和文件的创建、移 动、删除和重命名等操作，支持配置用户和访问权限，但不支持<strong>硬链接和软连接</strong>。NameNode 负责维护文件系统名称空间，记录对名称空间或其属性的任何更改。</p>
+<p>但是这篇文章里说HDFS实现了软连接但是没有实现硬链接：<br>HDFS符号链接和硬链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Androidlushangderen/article/details/52808554">https://blog.csdn.net/Androidlushangderen/article/details/52808554</a></p>
+<ul>
+<li>与Linux文件系统中的软链接概念一样，HDFS符号链接也是相当于给目标文件新建一个自定义路径，这个自定义路径实质指向目标文件。所以在这里HDFS符号链接中做的最重要的事情就是路径的解析。而且这个解析还有可能是嵌套的，符号链接中指向的是另外一个符号链接。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/06/hdfs1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/17/sort-summery1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -489,97 +571,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/28/index-paper-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="http://qo26v676s.hn-bkt.clouddn.com/image/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="lxf">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lxf's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/28/index-paper-summary/" class="post-title-link" itemprop="url">流量存储索引相关文章总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-02-28 20:51:53 / 修改时间：22:49:06" itemprop="dateCreated datePublished" datetime="2021-02-28T20:51:53+08:00">2021-02-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B5%81%E9%87%8F%E5%AD%98%E5%82%A8%E7%B4%A2%E5%BC%95/" itemprop="url" rel="index"><span itemprop="name">流量存储索引</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="索引相关知识"><a href="#索引相关知识" class="headerlink" title="索引相关知识"></a>索引相关知识</h3><ul>
-<li>现有的索引方法主要分为三种:哈希索引，B 树或者 B+树索引，bitmap 索引。</li>
-<li><strong>哈希索引</strong><ul>
-<li>此方法在开始阶段，每个记录的插入只消耗较小的 CPU 时间。但是随着记录数目的增加，由于哈希冲突链长度的不断增加，之后的插入操作将会花费大量的时间去查找哈希表中的对应存储位置。</li>
-<li>只支持单域的相等性查找，不支持区间范围查找</li>
-<li>为组合字段建立索引的时候，针对部分索引字段的查询是不能支持的</li>
-</ul>
-</li>
-<li><strong>B 树或者 B+树索引</strong><ul>
-<li>许多传统关系型数据库都是采用 B 树或 B+树索引方法，比如 MySQL</li>
-<li>B 树和 B+树都是多路平衡查找树，他们的特点是可以保证索引键值的有序性并且能够在对数 时间复杂度内进行插入操作和查询操作</li>
-<li>B+树与 B 树的不同在于 B+树的非叶子节点存储的都是关键字没有数据记录，数据记录都存在叶子节点上。所有的关键字都会出现在叶子节点当中，并且<strong>叶子节点会存储指向下一个叶子节点的指针，这样就可以对叶子节点的数据顺序地进行有序访问了</strong>。</li>
-<li>当一个节点包含的关键字满了的时候需要分裂成为两个节点，这 涉及到大量数据的拷贝工作，所以 B 树或 B+ 树在数据量非常大的时候并不能支持快 速实时的索引插入、查询操作</li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nullzx/p/8729425.html">https://www.cnblogs.com/nullzx/p/8729425.html</a></li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/28/index-paper-summary/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -651,20 +642,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
